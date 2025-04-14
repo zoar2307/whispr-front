@@ -9,7 +9,7 @@ export default function ChatItem({ chat, user, selectedChatId, onSelectChat }) {
             <section className="relative min-w-12 h-12 ">
                 <img src={chat.members.find(member => member.pNumber !== user.pNumber).imgUrl} className="w-full h-full rounded-full object-cover" />
                 {chat.messages.reduce((acc, message) => !message.isSeen && acc + 1, 0) > 0 &&
-                    <section className="flex items-center justify-center bg-[#9F99AE]  h-3.5 p-1  rounded-full absolute -right-2 top-0">
+                    <section className="flex items-center justify-center bg-[#9F99AE]  h-3.5 p-1  rounded-full absolute -right-0 -top-1">
                         <span className="text-xs font-light text-white ">{chat.messages.reduce((acc, message) => !message.isSeen && acc + 1, 0) > 99 ? '99+' : chat.messages.reduce((acc, message) => !message.isSeen && acc + 1, 0)}</span>
                     </section>}
             </section>

@@ -11,6 +11,12 @@ export function ChatsPage() {
         pNumber: '0533393504',
         imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
     }
+    // const connectedUser = {
+    //     _id: 'u103',
+    //     displayName: 'Haim',
+    //     pNumber: '22222',
+    //     imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1727762540/samples/man-portrait.jpg'
+    // }
 
     const [selectedChatId, setSelectedChatId] = useState()
     const [localChats, setLocalChats] = useState([
@@ -92,19 +98,20 @@ export function ChatsPage() {
         setSelectedChatId(chatId)
     }
 
-    function onAddMassage(message) {
+    function onAddMassage(content) {
         const newMessage = {
-            _id: `m${i + 101}`,
-            writer: {
-                _id: 'u101',
-                displayName: 'Zohar',
-                pNumber: '0533393504',
-                imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
-            },
-            creationTime: Date.now() - i * 60000, // spaced out 1 minute apart
-            content: `Message number ${i + 1}`,
+            _id: Date.now(),
+            writer: connectedUser,
+            creationTime: Date.now(),
+            content,
             isSeen: false
         }
+        setLocalChats(prev => prev.map(chat => {
+            if (chat._id === selectedChatId) {
+                return { ...chat, messages: [...chat.messages, newMessage] }
+            }
+            return chat
+        }))
     }
 
     useEffect(() => {
@@ -157,7 +164,7 @@ export function ChatsPage() {
                 </section>
                 {/* Chats preview */}
                 <section className="h-full w-full bg-[#D9D9D9] ">
-                    <ChatPreview chats={localChats} selectedChatId={selectedChatId} user={connectedUser} />
+                    <ChatPreview chats={localChats} selectedChatId={selectedChatId} user={connectedUser} onAddMassage={onAddMassage} />
                 </section>
             </section>
         </section>
