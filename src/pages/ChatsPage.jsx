@@ -44,10 +44,10 @@ export function ChatsPage() {
                     pNumber: '0533393504',
                     imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
                 },
-                creationTime: Date.now() - i * 60000, // spaced out 1 minute apart
+                creationTime: Date.now() - i * 60000 * 60 * 12,
                 content: `Message number ${i + 1}`,
                 isSeen: false
-            }))
+            })).sort((m1, m2) => m1.creationTime - m2.creationTime)
         },
         {
             _id: 'c102',
@@ -79,18 +79,18 @@ export function ChatsPage() {
                         pNumber: '22222',
                         imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1727762540/samples/man-portrait.jpg'
                     }
-                ];
+                ]
 
                 const randomWriter = members[Math.floor(Math.random() * members.length)];
 
                 return {
                     _id: `m${i + 101}`,
                     writer: randomWriter,
-                    creationTime: Date.now() - i * 60000, // spaced out 1 minute apart
+                    creationTime: Date.now() - i * 60000 * 60 * 12,
                     content: `Message number ${i + 1}`,
                     isSeen: false
-                };
-            })
+                }
+            }).sort((m1, m2) => m1.creationTime - m2.creationTime)
         }
     ])
 
@@ -133,7 +133,7 @@ export function ChatsPage() {
             font-poppins
             `} >
 
-            <section className="bg-white  rounded-2xl shadow-black overflow-hidden flex col-start-2 row-start-2">
+            <section className="rounded-2xl shadow-black overflow-hidden flex col-start-2 row-start-2">
 
                 <section className=" min-w-[445px] max-w-[445px] h-full bg-[#E1DEDE] shadow-[2px_0_5px_rgba(0,0,0,0.2)] z-10 flex">
                     {/* SideBar */}
@@ -163,7 +163,7 @@ export function ChatsPage() {
 
                 </section>
                 {/* Chats preview */}
-                <section className="h-full w-full bg-[#D9D9D9] ">
+                <section className="h-full w-full bg-[#EEEEEE] ">
                     <ChatPreview chats={localChats} selectedChatId={selectedChatId} user={connectedUser} onAddMassage={onAddMassage} />
                 </section>
             </section>
