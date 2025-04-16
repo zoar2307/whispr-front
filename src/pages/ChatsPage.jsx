@@ -101,7 +101,6 @@ export function ChatsPage() {
             try {
                 const userChats = await userChatsService.query()
                 setUserChats(...userChats)
-                console.log('s')
             } catch (err) {
                 console.error('Failed to fetch chats:', err)
             }

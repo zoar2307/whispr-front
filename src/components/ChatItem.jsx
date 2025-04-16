@@ -7,12 +7,10 @@ export default function ChatItem({ chat, user, selectedChatId, onSelectChat }) {
 
     useEffect(() => {
         setUnreadMessages(chat.messages.reduce((acc, message) => {
-            console.log(message.writer._id !== user._id)
             if (message.writer._id !== user._id && !message.isSeen) acc++
-            console.log(acc)
             return acc
         }, 0))
-    }, [])
+    }, [chat])
 
     return (
         <section
