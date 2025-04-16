@@ -1,19 +1,19 @@
 import { MessageSquare, Settings } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
-export function SideBar({ chats, user }) {
+export function SideBar({ chats, user, selectedChatId }) {
 
     const [unreadMessages, setUnreadMessages] = useState(0)
 
     useEffect(() => {
+        setUnreadMessages(0)
         chats.forEach(chat => {
             setUnreadMessages(prev => prev + chat.messages.reduce((acc, message) => {
                 if (message.writer._id !== user._id && !message.isSeen) acc++
                 return acc
             }, 0))
         })
-    }, [chats])
-    console.log(unreadMessages)
+    }, [chats, selectedChatId])
 
     return (
         <section className="flex flex-col justify-between items-center w-[75px] h-full shadow-[2px_0_5px_rgba(0,0,0,0.2)] z-10  bg-[#D9D9D9]">

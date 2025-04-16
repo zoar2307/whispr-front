@@ -148,7 +148,7 @@ export function ChatsPage() {
 
                 <section className=" min-w-[445px] max-w-[445px] h-full bg-[#E1DEDE] shadow-[2px_0_5px_rgba(0,0,0,0.2)] z-10 flex">
                     {/* SideBar */}
-                    <SideBar chats={userChats} user={connectedUser} />
+                    <SideBar chats={userChats} user={connectedUser} selectedChatId={selectedChatId} />
                     <section className="flex flex-col w-full h-full">
                         <section className="flex flex-col gap-3 p-4 ">
                             <section className='flex items-center justify-between'>
