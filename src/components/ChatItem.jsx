@@ -1,6 +1,18 @@
 import { Eye, EyeOff } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export default function ChatItem({ chat, user, selectedChatId, onSelectChat }) {
+
+    const [unreadMessages, setUnreadMessages] = useState(0)
+
+    useEffect(() => {
+        setUnreadMessages(chat.messages.reduce((acc, message) => {
+            console.log(message.writer._id !== user._id)
+            if (message.writer._id !== user._id && !message.isSeen) acc++
+            console.log(acc)
+            return acc
+        }, 0))
+    }, [])
 
     return (
         <section
@@ -8,9 +20,11 @@ export default function ChatItem({ chat, user, selectedChatId, onSelectChat }) {
             className={`group flex items-center gap-4 p-4 py-2 h-[70px] shadow-[0_-1px_1px_rgba(0,0,0,0.2)] overflow-hidden select-none ${selectedChatId === chat._id ? 'bg-[#D3CFDE]' : ' bg-[#D9D9D9]'} cursor-pointer  hover:bg-[#D3CFDE] duration-300`}>
             <section className="relative min-w-12 h-12 ">
                 <img src={chat.members.find(member => member.pNumber !== user.pNumber).imgUrl} className="w-full h-full rounded-full object-cover" />
-                {chat.messages.reduce((acc, message) => !message.isSeen && acc + 1, 0) > 0 &&
+                {unreadMessages > 0 &&
                     <section className="flex items-center justify-center bg-[#9F99AE]  h-3.5 p-1  rounded-full absolute -right-0 -top-1">
-                        <span className="text-xs font-light text-white ">{chat.messages.reduce((acc, message) => !message.isSeen && acc + 1, 0) > 99 ? '99+' : chat.messages.reduce((acc, message) => !message.isSeen && acc + 1, 0)}</span>
+                        <span className="text-xs font-light text-white ">
+                            {unreadMessages > 99 ? '99+' : unreadMessages}
+                        </span>
                     </section>}
             </section>
             <section className="flex flex-col justify-between w-full">
