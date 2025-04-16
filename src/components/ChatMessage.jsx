@@ -30,7 +30,7 @@ export default function ChatMessage({ idx, message, user, prevMessage }) {
                 </section>
             }
             <section key={message._id} className={`flex  ${message.writer._id === user._id ? 'flex-row' : 'flex-row-reverse'} gap-4 p-3`}>
-                <img src={message.writer.imgUrl} alt="" className='w-8 h-8 object-cover rounded-full ' />
+                <img src={message.writer.imgUrl} alt="" className='w-8 h-8 aspect-square object-cover rounded-full ' />
 
                 <section className={`relative flex flex-row-reverse justify-between gap-2 min-w-24 ${message.writer._id === user._id ? 'bg-[#D3CFDE] rounded-tl-none' : 'bg-[#E1DEDE] rounded-tr-none'} rounded-xl p-2 ${isMultiline && 'pb-5'} `}>
                     <p ref={pRef} className='max-w-md  break-words whitespace-pre-wrap w-full '>

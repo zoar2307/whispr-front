@@ -6,7 +6,6 @@ export default function ChatPreview({ chats, selectedChatId, user, onAddMassage 
     const [inputContent, setInputContent] = useState('')
     const chatRef = useRef()
     const textareaRef = useRef()
-    const lastMassageDateRef = useRef(null)
     const [selectedChat, setSelectedChat] = useState(null)
 
     useEffect(() => {
@@ -28,10 +27,6 @@ export default function ChatPreview({ chats, selectedChatId, user, onAddMassage 
         setInputContent('')
         textareaRef.current.style.height = 'auto'
         textareaRef.current.style.height = `40px`
-    }
-
-    function updateLastMassageDate(date) {
-        lastMassageDateRef.current = date
     }
 
     if (!selectedChatId || !selectedChat) return <section className='w-full h-full flex items-center justify-center'>Select chat</section>

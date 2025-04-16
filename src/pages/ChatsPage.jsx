@@ -3,6 +3,7 @@ import { ChatsList } from "../components/ChatsList";
 import ChatPreview from "../components/ChatPreview";
 import { useEffect, useState } from "react";
 import { userChatsService } from "../services/userChats.service";
+import { SideBar } from "../components/SideBar";
 
 export function ChatsPage() {
 
@@ -135,8 +136,6 @@ export function ChatsPage() {
         }))
     }
 
-
-
     return (
         <section className={`bg-[#524A65] w-full h-[100vh] 
             grid 
@@ -149,9 +148,7 @@ export function ChatsPage() {
 
                 <section className=" min-w-[445px] max-w-[445px] h-full bg-[#E1DEDE] shadow-[2px_0_5px_rgba(0,0,0,0.2)] z-10 flex">
                     {/* SideBar */}
-                    <section className="w-[75px] h-full shadow-[2px_0_5px_rgba(0,0,0,0.2)] z-10  bg-[#D9D9D9]">
-
-                    </section>
+                    <SideBar chats={userChats} user={connectedUser} />
                     <section className="flex flex-col w-full h-full">
                         <section className="flex flex-col gap-3 p-4 ">
                             <section className='flex items-center justify-between'>

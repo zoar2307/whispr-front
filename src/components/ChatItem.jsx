@@ -16,8 +16,8 @@ export default function ChatItem({ chat, user, selectedChatId, onSelectChat }) {
         <section
             onClick={() => onSelectChat(chat._id)}
             className={`group flex items-center gap-4 p-4 py-2 h-[70px] shadow-[0_-1px_1px_rgba(0,0,0,0.2)] overflow-hidden select-none ${selectedChatId === chat._id ? 'bg-[#D3CFDE]' : ' bg-[#D9D9D9]'} cursor-pointer  hover:bg-[#D3CFDE] duration-300`}>
-            <section className="relative min-w-12 h-12 ">
-                <img src={chat.members.find(member => member.pNumber !== user.pNumber).imgUrl} className="w-full h-full rounded-full object-cover" />
+            <section className="relative w-12 ">
+                <img src={chat.members.find(member => member.pNumber !== user.pNumber).imgUrl} className="w-full aspect-square rounded-full object-cover" />
                 {unreadMessages > 0 &&
                     <section className="flex items-center justify-center bg-[#9F99AE]  h-3.5 p-1  rounded-full absolute -right-0 -top-1">
                         <span className="text-xs font-light text-white ">
