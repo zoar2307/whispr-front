@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 export default function ChatMessage({ idx, message, user, prevMessage }) {
     const pRef = useRef(null)
     const [isMultiline, setIsMultiline] = useState(false)
-    if (prevMessage) console.log(new Date(message.creationTime).toLocaleDateString(), new Date(prevMessage.creationTime).toLocaleDateString() || null)
-
 
     useEffect(() => {
         if (pRef.current && 24 < pRef.current.clientHeight) {
@@ -13,15 +11,21 @@ export default function ChatMessage({ idx, message, user, prevMessage }) {
         } else {
             setIsMultiline(false)
         }
-
-        // if(lastMassageDate.current !==)
     }, [])
+
     return (
         <>
             {((idx === 0) || (new Date(message.creationTime).toLocaleDateString() !== new Date(prevMessage.creationTime).toLocaleDateString())) &&
                 <section className='flex w-full  justify-center p-2'>
                     <section className='flex justify-center items-center w-28 h-5 bg-gray-500  rounded-full  '>
-                        <span className=' text-white text-sm'>{new Date(message.creationTime).toLocaleDateString()}</span>
+                        <span className=' text-white text-sm'>
+                            {new Date().toLocaleDateString() === new Date(message.creationTime).toLocaleDateString() ?
+                                'Today'
+                                :
+                                `
+                        ${new Date(message.creationTime).toString().split(' ')[2]}
+                        ${new Date(message.creationTime).toString().split(' ')[1]} ,
+                        ${new Date(message.creationTime).toString().split(' ')[3].slice(2)}`}</span>
                     </section>
                 </section>
             }
@@ -33,7 +37,9 @@ export default function ChatMessage({ idx, message, user, prevMessage }) {
                         {message.content}
                     </p>
                     <section className={` flex gap-1 items-center ${isMultiline && 'absolute left-2 bottom-1'} `}>
-                        <p className='text-xs text-gray-600'>{new Date(message.creationTime).toLocaleDateString()}</p>
+                        <p className='text-xs text-gray-600'>
+                            {new Date(message.creationTime).toString().split(' ')[4].slice(0, 5)}
+                        </p>
                         {message.isSeen && message.writer._id === user._id &&
                             <Eye className="w-3.5 h-3.5  text-blue-400" />
                         }

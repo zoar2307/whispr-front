@@ -2,6 +2,7 @@ import React from 'react'
 import ChatItem from './ChatItem'
 
 export function ChatsList({ chats, user, selectedChatId, onSelectChat }) {
+
     return (
         <>
             {chats.map((chat) => {

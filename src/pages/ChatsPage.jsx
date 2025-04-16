@@ -2,6 +2,7 @@ import { MessageSquarePlus } from "lucide-react";
 import { ChatsList } from "../components/ChatsList";
 import ChatPreview from "../components/ChatPreview";
 import { useEffect, useState } from "react";
+import { userChatsService } from "../services/userChats.service";
 
 export function ChatsPage() {
 
@@ -11,92 +12,113 @@ export function ChatsPage() {
         pNumber: '0533393504',
         imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
     }
-    // const connectedUser = {
-    //     _id: 'u103',
-    //     displayName: 'Haim',
-    //     pNumber: '22222',
-    //     imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1727762540/samples/man-portrait.jpg'
-    // }
 
     const [selectedChatId, setSelectedChatId] = useState()
-    const [localChats, setLocalChats] = useState([
-        {
-            _id: 'c101',
-            members: [
-                {
-                    _id: 'u101',
-                    displayName: 'Zohar',
-                    pNumber: '0533393504',
-                    imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
-                },
-                {
-                    _id: 'u102',
-                    displayName: 'Itzik',
-                    pNumber: '1111',
-                    imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1727762539/samples/look-up.jpg'
-                }
-            ],
-            messages: Array.from({ length: 100 }, (_, i) => ({
-                _id: `m${i + 101}`,
-                writer: {
-                    _id: 'u101',
-                    displayName: 'Zohar',
-                    pNumber: '0533393504',
-                    imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
-                },
-                creationTime: Date.now() - i * 60000 * 60 * 12,
-                content: `Message number ${i + 1}`,
-                isSeen: false
-            })).sort((m1, m2) => m1.creationTime - m2.creationTime)
-        },
-        {
-            _id: 'c102',
-            members: [
-                {
-                    _id: 'u101',
-                    displayName: 'Zohar',
-                    pNumber: '0533393504',
-                    imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
-                },
-                {
-                    _id: 'u103',
-                    displayName: 'Haim',
-                    pNumber: '22222',
-                    imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1727762540/samples/man-portrait.jpg'
-                }
-            ],
-            messages: Array.from({ length: 100 }, (_, i) => {
-                const members = [
-                    {
-                        _id: 'u101',
-                        displayName: 'Zohar',
-                        pNumber: '0533393504',
-                        imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
-                    },
-                    {
-                        _id: 'u103',
-                        displayName: 'Haim',
-                        pNumber: '22222',
-                        imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1727762540/samples/man-portrait.jpg'
-                    }
-                ]
+    // const [localChats, setLocalChats] = useState([
+    //     {
+    //         _id: 'c101',
+    //         members: [
+    //             {
+    //                 _id: 'u101',
+    //                 displayName: 'Zohar',
+    //                 pNumber: '0533393504',
+    //                 imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
+    //             },
+    //             {
+    //                 _id: 'u102',
+    //                 displayName: 'Itzik',
+    //                 pNumber: '1111',
+    //                 imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1727762539/samples/look-up.jpg'
+    //             }
+    //         ],
+    //         messages: Array.from({ length: 100 }, (_, i) => ({
+    //             _id: `m${i + 101}`,
+    //             writer: {
+    //                 _id: 'u101',
+    //                 displayName: 'Zohar',
+    //                 pNumber: '0533393504',
+    //                 imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
+    //             },
+    //             creationTime: Date.now() - i * 60000 * 60 * 12,
+    //             content: `Message number ${i + 1}`,
+    //             isSeen: false
+    //         })).sort((m1, m2) => m1.creationTime - m2.creationTime)
+    //     },
+    //     {
+    //         _id: 'c102',
+    //         members: [
+    //             {
+    //                 _id: 'u101',
+    //                 displayName: 'Zohar',
+    //                 pNumber: '0533393504',
+    //                 imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
+    //             },
+    //             {
+    //                 _id: 'u103',
+    //                 displayName: 'Haim',
+    //                 pNumber: '22222',
+    //                 imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1727762540/samples/man-portrait.jpg'
+    //             }
+    //         ],
+    //         messages: Array.from({ length: 100 }, (_, i) => {
+    //             const members = [
+    //                 {
+    //                     _id: 'u101',
+    //                     displayName: 'Zohar',
+    //                     pNumber: '0533393504',
+    //                     imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1744285013/meTemp_zrcaup.jpg'
+    //                 },
+    //                 {
+    //                     _id: 'u103',
+    //                     displayName: 'Haim',
+    //                     pNumber: '22222',
+    //                     imgUrl: 'https://res.cloudinary.com/sey-app/image/upload/v1727762540/samples/man-portrait.jpg'
+    //                 }
+    //             ]
 
-                const randomWriter = members[Math.floor(Math.random() * members.length)];
+    //             const randomWriter = members[Math.floor(Math.random() * members.length)];
 
-                return {
-                    _id: `m${i + 101}`,
-                    writer: randomWriter,
-                    creationTime: Date.now() - i * 60000 * 60 * 12,
-                    content: `Message number ${i + 1}`,
-                    isSeen: false
-                }
-            }).sort((m1, m2) => m1.creationTime - m2.creationTime)
-        }
-    ])
+    //             return {
+    //                 _id: `m${i + 101}`,
+    //                 writer: randomWriter,
+    //                 creationTime: Date.now() - i * 60000 * 60 * 12,
+    //                 content: `Message number ${i + 1}`,
+    //                 isSeen: false
+    //             }
+    //         }).sort((m1, m2) => m1.creationTime - m2.creationTime)
+    //     }
+    // ])
+
+
+    const [userChats, setUserChats] = useState([])
 
     function onSelectChat(chatId) {
         setSelectedChatId(chatId)
     }
+
+    useEffect(() => {
+        const fetchChats = async () => {
+            try {
+                const userChats = await userChatsService.query()
+                setUserChats(...userChats)
+                console.log('s')
+            } catch (err) {
+                console.error('Failed to fetch chats:', err)
+            }
+        }
+        fetchChats()
+    }, [])
+
+    useEffect(() => {
+        if (selectedChatId) {
+            setUserChats(prev => prev.map(chat => {
+                if (chat._id === selectedChatId) {
+                    return { ...chat, messages: chat.messages.map((message => ({ ...message, isSeen: true }))) }
+                }
+                return chat
+            }))
+        }
+    }, [selectedChatId])
 
     function onAddMassage(content) {
         const newMessage = {
@@ -106,7 +128,7 @@ export function ChatsPage() {
             content,
             isSeen: false
         }
-        setLocalChats(prev => prev.map(chat => {
+        setUserChats(prev => prev.map(chat => {
             if (chat._id === selectedChatId) {
                 return { ...chat, messages: [...chat.messages, newMessage] }
             }
@@ -114,16 +136,7 @@ export function ChatsPage() {
         }))
     }
 
-    useEffect(() => {
-        if (selectedChatId) {
-            setLocalChats(prev => prev.map(chat => {
-                if (chat._id === selectedChatId) {
-                    return { ...chat, messages: chat.messages.map((message => ({ ...message, isSeen: true }))) }
-                }
-                return chat
-            }))
-        }
-    }, [selectedChatId])
+
 
     return (
         <section className={`bg-[#524A65] w-full h-[100vh] 
@@ -157,14 +170,14 @@ export function ChatsPage() {
 
 
                         {/* Chats List */}
-                        <ChatsList chats={localChats} user={connectedUser} selectedChatId={selectedChatId} onSelectChat={onSelectChat} />
+                        <ChatsList chats={userChats} user={connectedUser} selectedChatId={selectedChatId} onSelectChat={onSelectChat} />
                     </section>
                     {/* Chat */}
 
                 </section>
                 {/* Chats preview */}
                 <section className="h-full w-full bg-[#EEEEEE] ">
-                    <ChatPreview chats={localChats} selectedChatId={selectedChatId} user={connectedUser} onAddMassage={onAddMassage} />
+                    <ChatPreview chats={userChats} selectedChatId={selectedChatId} user={connectedUser} onAddMassage={onAddMassage} />
                 </section>
             </section>
         </section>
